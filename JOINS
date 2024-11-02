@@ -1,0 +1,47 @@
+-- Select all records from the 'dep' (department) table
+select * from dep;
+
+-- Select all records from the 'employ' (employee) table
+select * from employ;
+
+-- Perform an equi join between 'employ' and 'dep' tables where dep_id matches
+select e.e_id, e.e_name, e.dep_id, d.dep_name
+from employ e, dep d
+where e.dep_id = d.dep_id;
+
+-- Perform an inner join between 'employ' and 'dep' tables based on matching dep_id
+select e.e_id, e.e_name, e.dep_id, d.dep_name
+from employ e inner join dep d
+on e.dep_id = d.dep_id;
+
+-- Perform a natural join between 'employ' and 'dep' tables
+select * from employ natural join dep;
+
+-- Perform a left join between 'employ' and 'dep' tables to include all employees and matching departments
+select e.e_name, e.e_id, e.dep_id, d.dep_name
+from employ e left join dep d
+on e.dep_id = d.dep_id;
+
+-- Perform a right join to include all departments and matching employees
+select e.e_id, d.dep_id, d.dep_name
+from employ e right join dep d
+on e.dep_id = d.dep_id;
+
+-- Perform a right join with additional employee details for each department
+select e.e_name, e.e_id, e.dep_id, d.dep_id, d.dep_name
+from employ e right join dep d 
+on e.dep_id = d.dep_id;
+
+-- Perform a full outer join to include all records from 'employ' and 'dep'
+select e.e_name, e.e_id, e.dep_id, d.dep_id, d.dep_name
+from employ e right join dep d 
+on e.dep_id = d.dep_id
+union 
+select e.e_name, e.e_id, e.dep_id, d.dep_id, d.dep_name
+from dep d right join employ e
+on e.dep_id = d.dep_id;
+
+-- Perform a self join on 'employ' table to find employees in the same department but with different IDs
+select e1.e_id
+from employ as e1 inner join employ as e2
+on e1.dep_id = e2.dep_id and e1.e_id <> e2.e_id;
